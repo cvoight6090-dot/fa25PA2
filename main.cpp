@@ -34,6 +34,7 @@ int main() {
     // Step 3: Build encoding tree using your heap
     int root = buildEncodingTree(nextFree);
 
+
     // Step 4: Generate binary codes using an STL stack
     string codes[26];
     generateCodes(root, codes);
@@ -103,7 +104,21 @@ int buildEncodingTree(int nextFree) {
     for (int i = 0; i < nextFree; ++i) {
         heap.push(i, weightArr);
     }
+    //TODO: i think broken need to fix later
+    while (heap.size > 1) {
+        int left = heap.pop(weightArr);
+        int right = heap.pop(weightArr);
 
+        //puts parent in next unused slot and increments nextFree
+        int parent = nextFree++;
+        weightArr[parent] = weightArr[left] + weightArr[right];
+        //charArr[parent] = '';
+        leftArr[parent] = left;
+        rightArr[parent] = right;
+
+        heap.push(parent, weightArr);
+    }
+    return heap.pop(weightArr);
 
 
     return -1; // placeholder
