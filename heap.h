@@ -44,8 +44,11 @@ struct MinHeap {
         //data[pos/parent] might be needed here
         while (pos > 0) {
             int parent = (pos - 1) / 2;
-            if (weightArr[parent] > weightArr[pos]) {
-                swap(pos, parent);
+            if (weightArr[data[parent]] > weightArr[data[pos]]) {
+                //swapping
+                int temp = data[parent];
+                data[parent] = data[pos];
+                data[pos] = temp;
                 pos = parent;
             }
             else {
@@ -61,15 +64,19 @@ struct MinHeap {
             int right = 2 * pos + 2;
             int small = pos;
             //left child
-            if (left < size && weightArr[left] > weightArr[small]) {
+            if (left < size && weightArr[data[left]] < weightArr[data[small]]) {
                 small = left;
             }
             //right child
-            if (right < size && weightArr[right] > weightArr[small]) {
+            if (right < size && weightArr[data[right]] < weightArr[data[small]]) {
                 small = right;
             }
             if (small != pos) {
-                swap(pos, small);
+                //swapping
+                int temp = data[small];
+                data[small] = data[pos];
+                data[pos] = temp;
+
                 pos = small;
             }
             else {

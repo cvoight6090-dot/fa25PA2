@@ -30,7 +30,7 @@ int main() {
 
     // Step 2: Create leaf nodes for each character with nonzero frequency
     int nextFree = createLeafNodes(freq);
-
+    cout << nextFree << endl;
     // Step 3: Build encoding tree using your heap
     int root = buildEncodingTree(nextFree);
 
@@ -121,7 +121,7 @@ int buildEncodingTree(int nextFree) {
     return heap.pop(weightArr);
 
 
-    return -1; // placeholder
+    //return -1; // placeholder
 
 }
 
@@ -131,6 +131,27 @@ void generateCodes(int root, string codes[]) {
     // Use stack<pair<int, string>> to simulate DFS traversal.
     // Left edge adds '0', right edge adds '1'.
     // Record code when a leaf node is reached.
+    stack<pair<int, string>> st;
+    st.push({root, ""});
+    while (!st.empty()) {
+        pair<int, string> p = st.top();
+        st.pop();
+
+        int node = p.first;
+        string bCode = p.second;
+
+        if (leftArr[node] == -1 && rightArr[node] == -1) {
+            codes[node] = bCode;
+        }
+        else {
+            if (rightArr[node] != -1) {
+                st.push({rightArr[node], bCode + "1"});
+            }
+            if (leftArr[node] != -1) {
+                st.push({leftArr[node], bCode + "0"});
+            }
+        }
+    }
 }
 
 // Step 5: Print table and encoded message
