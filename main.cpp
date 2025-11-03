@@ -30,7 +30,6 @@ int main() {
 
     // Step 2: Create leaf nodes for each character with nonzero frequency
     int nextFree = createLeafNodes(freq);
-    cout << nextFree << endl;
     // Step 3: Build encoding tree using your heap
     int root = buildEncodingTree(nextFree);
 
@@ -112,6 +111,7 @@ int buildEncodingTree(int nextFree) {
         //puts parent in next unused slot and increments nextFree
         int parent = nextFree++;
         weightArr[parent] = weightArr[left] + weightArr[right];
+
         //charArr[parent] = '';
         leftArr[parent] = left;
         rightArr[parent] = right;
@@ -141,7 +141,9 @@ void generateCodes(int root, string codes[]) {
         string bCode = p.second;
 
         if (leftArr[node] == -1 && rightArr[node] == -1) {
-            codes[node] = bCode;
+            //correctly assigns the character with the correct index in codes
+            char ch = charArr[node];
+            codes[ch - 'a'] = bCode;
         }
         else {
             if (rightArr[node] != -1) {
