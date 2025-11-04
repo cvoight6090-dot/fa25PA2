@@ -103,7 +103,6 @@ int buildEncodingTree(int nextFree) {
     for (int i = 0; i < nextFree; ++i) {
         heap.push(i, weightArr);
     }
-    //TODO: i think broken need to fix later
     while (heap.size > 1) {
         int left = heap.pop(weightArr);
         int right = heap.pop(weightArr);
@@ -112,16 +111,12 @@ int buildEncodingTree(int nextFree) {
         int parent = nextFree++;
         weightArr[parent] = weightArr[left] + weightArr[right];
 
-        //charArr[parent] = '';
         leftArr[parent] = left;
         rightArr[parent] = right;
 
         heap.push(parent, weightArr);
     }
     return heap.pop(weightArr);
-
-
-    //return -1; // placeholder
 
 }
 
